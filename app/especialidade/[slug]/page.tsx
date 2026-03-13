@@ -52,7 +52,7 @@ export default async function SpecialtyPage({ params, searchParams }: Props) {
   const { specialties, cities, states } = await fetchFilterOptions()
 
   const crumbs = [
-    { label: 'Inicio', href: '/' },
+    { label: 'Início', href: '/' },
     { label: specialty },
   ]
 

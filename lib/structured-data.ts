@@ -7,7 +7,7 @@ export function websiteJsonLd() {
     name: 'EmpregaMed',
     url: BASE_URL,
     description:
-      'Maior agregador de vagas medicas do Brasil. Reune oportunidades de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos em um so lugar.',
+      'Maior agregador de vagas médicas do Brasil. Reúne oportunidades de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos em um só lugar.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -26,6 +26,6 @@ export function organizationJsonLd() {
     name: 'EmpregaMed',
     url: BASE_URL,
     description:
-      'Agregador de vagas medicas do Brasil. Reune oportunidades de multiplos sites de emprego, cobrindo 31 especialidades medicas.',
+      'Agregador de vagas médicas do Brasil. Reúne oportunidades de múltiplos sites de emprego, cobrindo 31 especialidades médicas.',
   }
 }

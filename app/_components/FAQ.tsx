@@ -1,23 +1,23 @@
 const FAQS = [
   {
-    question: 'O que e o EmpregaMed?',
+    question: 'O que é o EmpregaMed?',
     answer:
-      'O EmpregaMed e o maior agregador de vagas medicas do Brasil. Reunimos oportunidades de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos em um so lugar, cobrindo 31 especialidades medicas.',
+      'O EmpregaMed é o maior agregador de vagas médicas do Brasil. Reunimos oportunidades de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos em um só lugar, cobrindo 31 especialidades médicas.',
   },
   {
-    question: 'O EmpregaMed e gratuito?',
+    question: 'O EmpregaMed é gratuito?',
     answer:
-      'Sim, o EmpregaMed e totalmente gratuito para medicos. Basta acessar o site, filtrar por especialidade, estado ou cidade e clicar na vaga para ser redirecionado ao site original.',
+      'Sim, o EmpregaMed é totalmente gratuito para médicos. Basta acessar o site, filtrar por especialidade, estado ou cidade e clicar na vaga para ser redirecionado ao site original.',
   },
   {
-    question: 'Com que frequencia as vagas sao atualizadas?',
+    question: 'Com que frequência as vagas são atualizadas?',
     answer:
-      'Nossos crawlers automatizados atualizam as vagas diariamente, garantindo que voce veja as oportunidades mais recentes.',
+      'Nossos crawlers automatizados atualizam as vagas diariamente, garantindo que você veja as oportunidades mais recentes.',
   },
   {
-    question: 'Quais especialidades medicas estao disponiveis?',
+    question: 'Quais especialidades médicas estão disponíveis?',
     answer:
-      'Cobrimos 31 especialidades, incluindo Cardiologia, Ortopedia, Pediatria, Clinica Geral, Ginecologia, Dermatologia, Psiquiatria, Neurologia, Cirurgia Geral, Medicina do Trabalho, entre outras.',
+      'Cobrimos 31 especialidades, incluindo Cardiologia, Ortopedia, Pediatria, Clínica Geral, Ginecologia, Dermatologia, Psiquiatria, Neurologia, Cirurgia Geral, Medicina do Trabalho, entre outras.',
   },
 ]
 

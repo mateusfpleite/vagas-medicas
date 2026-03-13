@@ -102,7 +102,7 @@ export function FilterBar({
               type="text"
               defaultValue={q}
               onChange={(e) => handleSearch(e.target.value)}
-              placeholder="Buscar no titulo..."
+              placeholder="Buscar no título..."
               className="w-full rounded-lg border border-cream-dark bg-white py-2.5 pl-3.5 pr-4 text-sm text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/10"
             />
           </div>

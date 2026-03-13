@@ -19,19 +19,19 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://empregamed.com.br'
 
 export const metadata: Metadata = {
   title: {
-    default: 'EmpregaMed — Vagas medicas de todo o Brasil em um so lugar',
+    default: 'EmpregaMed — Vagas médicas de todo o Brasil em um só lugar',
     template: '%s | EmpregaMed',
   },
   description:
-    'Encontre vagas medicas agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos. Filtre por especialidade, cidade, estado e mais.',
+    'Encontre vagas médicas agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos. Filtre por especialidade, cidade, estado e mais.',
   metadataBase: new URL(BASE_URL),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'EmpregaMed — Vagas medicas de todo o Brasil em um so lugar',
+    title: 'EmpregaMed — Vagas médicas de todo o Brasil em um só lugar',
     description:
-      'Encontre vagas medicas agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos. Filtre por especialidade, cidade, estado e mais.',
+      'Encontre vagas médicas agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos. Filtre por especialidade, cidade, estado e mais.',
     url: BASE_URL,
     siteName: 'EmpregaMed',
     locale: 'pt_BR',
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'EmpregaMed — Vagas medicas de todo o Brasil em um so lugar',
+    title: 'EmpregaMed — Vagas médicas de todo o Brasil em um só lugar',
     description:
-      'Encontre vagas medicas agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos.',
+      'Encontre vagas médicas agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos.',
   },
   robots: {
     index: true,

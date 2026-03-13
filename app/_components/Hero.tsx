@@ -9,15 +9,15 @@ export function Hero({ stats }: { stats: SiteStats }) {
         <h1
           className="animate-fade-slide-up font-[family-name:var(--font-serif)] text-4xl font-bold tracking-tight text-ink sm:text-5xl"
         >
-          Todas as vagas medicas do Brasil.
+          Todas as vagas médicas do Brasil.
           <br />
-          <span className="text-primary">Em um so lugar.</span>
+          <span className="text-primary">Em um só lugar.</span>
         </h1>
         <p
           className="animate-fade-slide-up mx-auto mt-4 max-w-lg text-ink-muted"
           style={{ animationDelay: '100ms' }}
         >
-          Agregamos vagas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos para voce nao precisar procurar em cada site.
+          Agregamos vagas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos para você não precisar procurar em cada site.
         </p>
         <div className="animate-fade-slide-up" style={{ animationDelay: '200ms' }}>
           <StatsBar stats={stats} />

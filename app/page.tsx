@@ -36,7 +36,7 @@ export default async function Page({ searchParams }: Props) {
       <section className="border-b border-cream-dark bg-white/40 py-6">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="text-sm leading-relaxed text-ink-muted">
-            O EmpregaMed agrega {stats.totalVagas.toLocaleString('pt-BR')} vagas medicas de 5 fontes
+            O EmpregaMed agrega {stats.totalVagas.toLocaleString('pt-BR')} vagas médicas de 5 fontes
             brasileiras — Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos — cobrindo 31
             especialidades em {stats.totalCities.toLocaleString('pt-BR')} cidades
             de {stats.totalStates} estados. Atualizado diariamente.

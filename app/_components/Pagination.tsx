@@ -33,7 +33,7 @@ export function Pagination({ page, totalPages, onPageChange }: Props) {
         onClick={() => onPageChange(page - 1)}
         disabled={page <= 1}
         className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-cream-dark bg-white text-ink-light shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all hover:border-primary/30 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
-        aria-label="Pagina anterior"
+        aria-label="Página anterior"
       >
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -64,7 +64,7 @@ export function Pagination({ page, totalPages, onPageChange }: Props) {
         onClick={() => onPageChange(page + 1)}
         disabled={page >= totalPages}
         className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-cream-dark bg-white text-ink-light shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all hover:border-primary/30 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
-        aria-label="Proxima pagina"
+        aria-label="Próxima página"
       >
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

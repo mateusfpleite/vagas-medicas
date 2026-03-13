@@ -61,7 +61,7 @@ export default async function SpecialtyStatePage({ params, searchParams }: Props
   if (count === 0) notFound()
 
   const crumbs = [
-    { label: 'Inicio', href: '/' },
+    { label: 'Início', href: '/' },
     { label: specialty, href: `/especialidade/${slug}` },
     { label: ufData.nome },
   ]

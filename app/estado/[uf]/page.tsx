@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!sigla || !nome) return {}
 
   const count = await fetchCountByState(sigla)
-  const title = `Vagas Medicas em ${nome}`
-  const description = `${count} vagas medicas em ${nome} (${sigla}) agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos.`
+  const title = `Vagas Médicas em ${nome}`
+  const description = `${count} vagas médicas em ${nome} (${sigla}) agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos.`
 
   return {
     title,
@@ -58,7 +58,7 @@ export default async function StatePage({ params, searchParams }: Props) {
   const { specialties, cities, states } = await fetchFilterOptions({ state: sigla })
 
   const crumbs = [
-    { label: 'Inicio', href: '/' },
+    { label: 'Início', href: '/' },
     { label: nome },
   ]
 
@@ -72,7 +72,7 @@ export default async function StatePage({ params, searchParams }: Props) {
         <div className="mx-auto max-w-5xl px-6 py-10">
           <Breadcrumbs crumbs={crumbs} />
           <h1 className="font-[family-name:var(--font-serif)] text-3xl font-bold text-ink sm:text-4xl">
-            Vagas Medicas em {nome}
+            Vagas Médicas em {nome}
           </h1>
           <p className="mt-2 text-ink-muted">
             {count} {count === 1 ? 'vaga encontrada' : 'vagas encontradas'} em {nome} ({sigla}).

@@ -8,12 +8,12 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://empregamed.com.br'
 export const metadata: Metadata = {
   title: 'Sobre o EmpregaMed',
   description:
-    'O EmpregaMed e o maior agregador de vagas medicas do Brasil. Saiba como funciona, quantas vagas temos e quais fontes utilizamos.',
+    'O EmpregaMed é o maior agregador de vagas médicas do Brasil. Saiba como funciona, quantas vagas temos e quais fontes utilizamos.',
   alternates: { canonical: '/sobre' },
   openGraph: {
     title: 'Sobre o EmpregaMed',
     description:
-      'O EmpregaMed e o maior agregador de vagas medicas do Brasil.',
+      'O EmpregaMed é o maior agregador de vagas médicas do Brasil.',
     url: `${BASE_URL}/sobre`,
   },
 }
@@ -25,7 +25,7 @@ export default async function SobrePage() {
   const specialties = await fetchAllSpecialties()
 
   const crumbs = [
-    { label: 'Inicio', href: '/' },
+    { label: 'Início', href: '/' },
     { label: 'Sobre' },
   ]
 
@@ -50,7 +50,7 @@ export default async function SobrePage() {
       </section>
       <article className="mx-auto max-w-3xl px-6 py-10">
         <p className="text-lg leading-relaxed text-ink-light">
-          O EmpregaMed e o maior agregador de vagas medicas do Brasil. Reunimos{' '}
+          O EmpregaMed é o maior agregador de vagas médicas do Brasil. Reunimos{' '}
           <strong className="text-ink">{stats.totalVagas.toLocaleString('pt-BR')} vagas</strong> de{' '}
           <strong className="text-ink">5 fontes</strong> diferentes, cobrindo{' '}
           <strong className="text-ink">{specialties.length} especialidades</strong> em{' '}
@@ -64,17 +64,17 @@ export default async function SobrePage() {
         <p className="mt-3 leading-relaxed text-ink-light">
           Nossos crawlers automatizados visitam diariamente os principais sites de emprego do Brasil
           — Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos — e coletam todas as vagas destinadas
-          a medicos. Cada vaga e normalizada, classificada por especialidade e disponibilizada em
+          a médicos. Cada vaga é normalizada, classificada por especialidade e disponibilizada em
           nossa plataforma com filtros por especialidade, estado e cidade.
         </p>
 
         <h2 className="mt-10 font-[family-name:var(--font-serif)] text-2xl font-bold text-ink">
-          Nossa missao
+          Nossa missão
         </h2>
         <p className="mt-3 leading-relaxed text-ink-light">
-          Facilitar a busca de emprego para medicos no Brasil. Em vez de visitar multiplos sites de
-          emprego, o medico encontra todas as oportunidades em um so lugar, com filtros especializados
-          para a area medica.
+          Facilitar a busca de emprego para médicos no Brasil. Em vez de visitar múltiplos sites de
+          emprego, o médico encontra todas as oportunidades em um só lugar, com filtros especializados
+          para a área médica.
         </p>
 
         <h2 className="mt-10 font-[family-name:var(--font-serif)] text-2xl font-bold text-ink">
@@ -85,14 +85,14 @@ export default async function SobrePage() {
           <li><strong className="text-ink">BNE</strong> — Banco Nacional de Empregos</li>
           <li><strong className="text-ink">Vagas.com</strong> — Plataforma brasileira de recrutamento</li>
           <li><strong className="text-ink">InfoJobs</strong> — Portal de empregos com foco no Brasil</li>
-          <li><strong className="text-ink">PCI Concursos</strong> — Concursos publicos e processos seletivos</li>
+          <li><strong className="text-ink">PCI Concursos</strong> — Concursos públicos e processos seletivos</li>
         </ul>
 
         <h2 className="mt-10 font-[family-name:var(--font-serif)] text-2xl font-bold text-ink">
           Especialidades cobertas
         </h2>
         <p className="mt-3 leading-relaxed text-ink-light">
-          Cobrimos {specialties.length} especialidades medicas, incluindo:{' '}
+          Cobrimos {specialties.length} especialidades médicas, incluindo:{' '}
           {specialties.join(', ')}.
         </p>
       </article>

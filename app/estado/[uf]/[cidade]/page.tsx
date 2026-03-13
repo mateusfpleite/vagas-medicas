@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
 
   const { count } = await fetchVagas({ state: ufData.sigla, city: [city] })
-  const title = `Vagas Medicas em ${city} - ${ufData.sigla}`
-  const description = `${count} vagas medicas em ${city}, ${ufData.nome}. Agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos.`
+  const title = `Vagas Médicas em ${city} - ${ufData.sigla}`
+  const description = `${count} vagas médicas em ${city}, ${ufData.nome}. Agregadas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos.`
 
   return {
     title,
@@ -63,7 +63,7 @@ export default async function CityPage({ params, searchParams }: Props) {
   const { specialties, cities, states } = await fetchFilterOptions({ state: ufData.sigla })
 
   const crumbs = [
-    { label: 'Inicio', href: '/' },
+    { label: 'Início', href: '/' },
     { label: ufData.nome, href: `/estado/${uf.toLowerCase()}` },
     { label: city },
   ]
@@ -78,7 +78,7 @@ export default async function CityPage({ params, searchParams }: Props) {
         <div className="mx-auto max-w-5xl px-6 py-10">
           <Breadcrumbs crumbs={crumbs} />
           <h1 className="font-[family-name:var(--font-serif)] text-3xl font-bold text-ink sm:text-4xl">
-            Vagas Medicas em {city}
+            Vagas Médicas em {city}
           </h1>
           <p className="mt-2 text-ink-muted">
             {count} {count === 1 ? 'vaga encontrada' : 'vagas encontradas'} em {city}, {ufData.nome}.
