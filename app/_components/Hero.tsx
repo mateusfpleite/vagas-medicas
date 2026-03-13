@@ -17,7 +17,7 @@ export function Hero({ stats }: { stats: SiteStats }) {
           className="animate-fade-slide-up mx-auto mt-4 max-w-lg text-ink-muted"
           style={{ animationDelay: '100ms' }}
         >
-          Agregamos vagas de Indeed, BNE, Vagas.com e InfoJobs para voce nao precisar procurar em cada site.
+          Agregamos vagas de Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos para voce nao precisar procurar em cada site.
         </p>
         <div className="animate-fade-slide-up" style={{ animationDelay: '200ms' }}>
           <StatsBar stats={stats} />
