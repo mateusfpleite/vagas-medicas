@@ -2,7 +2,7 @@ import 'server-only'
 
 import { db } from './db'
 import { vagasPublic } from './db/schema'
-import { eq, and, inArray, isNotNull, desc, sql, count, countDistinct, gte } from 'drizzle-orm'
+import { eq, and, inArray, isNotNull, desc, sql, count } from 'drizzle-orm'
 import { Vaga, SiteStats, SpecialtyCount } from './types'
 
 const PAGE_SIZE = 20
@@ -38,36 +38,33 @@ export async function fetchVagas(params: FetchVagasParams): Promise<FetchVagasRe
 
   const where = conditions.length > 0 ? and(...conditions) : undefined
 
-  const [rows, [{ total }]] = await Promise.all([
-    db
-      .select({
-        id: vagasPublic.id,
-        title: vagasPublic.title,
-        specialty: vagasPublic.specialty,
-        company: vagasPublic.company,
-        city: vagasPublic.city,
-        state: vagasPublic.state,
-        salary: vagasPublic.salary,
-        salaryMin: vagasPublic.salaryMin,
-        salaryMax: vagasPublic.salaryMax,
-        salaryPeriod: vagasPublic.salaryPeriod,
-        jobType: vagasPublic.jobType,
-        source: vagasPublic.source,
-        url: vagasPublic.url,
-        effectiveDate: vagasPublic.effectiveDate,
-        description: vagasPublic.description,
-        benefits: vagasPublic.benefits,
-      })
-      .from(vagasPublic)
-      .where(where)
-      .orderBy(desc(vagasPublic.effectiveDate))
-      .limit(PAGE_SIZE)
-      .offset(offset),
-    db
-      .select({ total: count() })
-      .from(vagasPublic)
-      .where(where),
-  ])
+  const rows = await db
+    .select({
+      id: vagasPublic.id,
+      title: vagasPublic.title,
+      specialty: vagasPublic.specialty,
+      company: vagasPublic.company,
+      city: vagasPublic.city,
+      state: vagasPublic.state,
+      salary: vagasPublic.salary,
+      salaryMin: vagasPublic.salaryMin,
+      salaryMax: vagasPublic.salaryMax,
+      salaryPeriod: vagasPublic.salaryPeriod,
+      jobType: vagasPublic.jobType,
+      source: vagasPublic.source,
+      url: vagasPublic.url,
+      effectiveDate: vagasPublic.effectiveDate,
+      description: vagasPublic.description,
+      benefits: vagasPublic.benefits,
+      totalCount: sql<number>`count(*) over()`.as('total_count'),
+    })
+    .from(vagasPublic)
+    .where(where)
+    .orderBy(desc(vagasPublic.effectiveDate))
+    .limit(PAGE_SIZE)
+    .offset(offset)
+
+  const total = rows[0]?.totalCount ?? 0
 
   const vagas: Vaga[] = rows.map((r) => ({
     id: r.id!,
@@ -135,26 +132,22 @@ export async function fetchStats(): Promise<SiteStats> {
   weekAgo.setDate(weekAgo.getDate() - 7)
   const weekAgoStr = weekAgo.toLocaleDateString('en-CA')
 
-  const [
-    [{ total }],
-    [{ newToday }],
-    [{ newThisWeek }],
-    [{ totalCities }],
-    [{ totalStates }],
-  ] = await Promise.all([
-    db.select({ total: count() }).from(vagasPublic),
-    db.select({ newToday: count() }).from(vagasPublic).where(gte(vagasPublic.effectiveDate, todayStr)),
-    db.select({ newThisWeek: count() }).from(vagasPublic).where(gte(vagasPublic.effectiveDate, weekAgoStr)),
-    db.select({ totalCities: countDistinct(vagasPublic.city) }).from(vagasPublic).where(isNotNull(vagasPublic.city)),
-    db.select({ totalStates: countDistinct(vagasPublic.state) }).from(vagasPublic).where(isNotNull(vagasPublic.state)),
-  ])
+  const [row] = await db
+    .select({
+      totalVagas: count(),
+      newToday: sql<number>`count(*) filter (where ${vagasPublic.effectiveDate} >= ${todayStr})`,
+      newThisWeek: sql<number>`count(*) filter (where ${vagasPublic.effectiveDate} >= ${weekAgoStr})`,
+      totalCities: sql<number>`count(distinct ${vagasPublic.city}) filter (where ${vagasPublic.city} is not null)`,
+      totalStates: sql<number>`count(distinct ${vagasPublic.state}) filter (where ${vagasPublic.state} is not null)`,
+    })
+    .from(vagasPublic)
 
   return {
-    totalVagas: total,
-    newToday,
-    newThisWeek,
-    totalCities,
-    totalStates,
+    totalVagas: row.totalVagas,
+    newToday: row.newToday,
+    newThisWeek: row.newThisWeek,
+    totalCities: row.totalCities,
+    totalStates: row.totalStates,
   }
 }
 
@@ -172,6 +165,92 @@ export async function fetchSpecialtyCounts(): Promise<SpecialtyCount[]> {
 
   return rows.map((r) => ({
     specialty: r.specialty!,
+    count: r.count,
+  }))
+}
+
+/** All specialties that have at least one vaga. */
+export async function fetchAllSpecialties(): Promise<string[]> {
+  const rows = await db
+    .selectDistinct({ specialty: vagasPublic.specialty })
+    .from(vagasPublic)
+    .where(isNotNull(vagasPublic.specialty))
+    .orderBy(vagasPublic.specialty)
+
+  return rows.map((r) => r.specialty!)
+}
+
+/** All states that have at least one vaga. */
+export async function fetchAllStates(): Promise<string[]> {
+  const rows = await db
+    .selectDistinct({ state: vagasPublic.state })
+    .from(vagasPublic)
+    .where(isNotNull(vagasPublic.state))
+    .orderBy(vagasPublic.state)
+
+  return rows.map((r) => r.state!)
+}
+
+/** All cities for a given state that have at least one vaga. */
+export async function fetchCitiesByState(state: string): Promise<string[]> {
+  const rows = await db
+    .selectDistinct({ city: vagasPublic.city })
+    .from(vagasPublic)
+    .where(and(eq(vagasPublic.state, state), isNotNull(vagasPublic.city)))
+    .orderBy(vagasPublic.city)
+
+  return rows.map((r) => r.city!)
+}
+
+/** Count vagas for a specialty (used in meta descriptions). */
+export async function fetchCountBySpecialty(specialty: string): Promise<number> {
+  const [row] = await db
+    .select({ count: count() })
+    .from(vagasPublic)
+    .where(eq(vagasPublic.specialty, specialty))
+
+  return row.count
+}
+
+/** Count vagas for a state (used in meta descriptions). */
+export async function fetchCountByState(state: string): Promise<number> {
+  const [row] = await db
+    .select({ count: count() })
+    .from(vagasPublic)
+    .where(eq(vagasPublic.state, state))
+
+  return row.count
+}
+
+/** All state+city pairs that have at least one vaga. Single query. */
+export async function fetchAllStateCityPairs(): Promise<{ state: string; city: string }[]> {
+  const rows = await db
+    .selectDistinct({
+      state: vagasPublic.state,
+      city: vagasPublic.city,
+    })
+    .from(vagasPublic)
+    .where(and(isNotNull(vagasPublic.state), isNotNull(vagasPublic.city)))
+    .orderBy(vagasPublic.state, vagasPublic.city)
+
+  return rows.map((r) => ({ state: r.state!, city: r.city! }))
+}
+
+/** Top 10 states by vaga count. */
+export async function fetchStateCounts(): Promise<{ state: string; count: number }[]> {
+  const rows = await db
+    .select({
+      state: vagasPublic.state,
+      count: count(),
+    })
+    .from(vagasPublic)
+    .where(isNotNull(vagasPublic.state))
+    .groupBy(vagasPublic.state)
+    .orderBy(desc(count()))
+    .limit(10)
+
+  return rows.map((r) => ({
+    state: r.state!,
     count: r.count,
   }))
 }
