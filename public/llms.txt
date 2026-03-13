@@ -1,0 +1,33 @@
+# EmpregaMed
+
+> Maior agregador de vagas medicas do Brasil. Reune oportunidades de
+> Indeed, BNE, Vagas.com, InfoJobs e PCI Concursos em um so lugar.
+
+## O que fazemos
+- Agregamos vagas medicas de 5+ fontes brasileiras
+- Cobrimos 31 especialidades medicas
+- Atualizamos diariamente com crawlers automatizados
+- Dados disponiveis por especialidade, estado e cidade
+
+## Especialidades cobertas
+Cardiologia, Ortopedia, Pediatria, Clinica Geral, Ginecologia,
+Dermatologia, Oftalmologia, Psiquiatria, Neurologia, Anestesiologia,
+Cirurgia Geral, Radiologia, Urologia, Medicina do Trabalho,
+Medicina da Familia, Emergencia, UTI, Oncologia, Endocrinologia,
+Gastroenterologia, Nefrologia, Pneumologia, Reumatologia,
+Hematologia, Infectologia, Geriatria, Medicina Esportiva,
+Otorrinolaringologia, Cirurgia Plastica, Cirurgia Cardiovascular,
+Medicina Nuclear
+
+## Fontes
+- Indeed Brasil (indeed.com.br)
+- BNE (bne.com.br)
+- Vagas.com (vagas.com.br)
+- InfoJobs (infojobs.com.br)
+- PCI Concursos (pciconcursos.com.br)
+
+## Paginas principais
+- Pagina inicial: https://empregamed.com.br
+- Especialidades: https://empregamed.com.br/especialidade/cardiologia
+- Estados: https://empregamed.com.br/estado/sp
+- Cidades: https://empregamed.com.br/estado/sp/sao-paulo
