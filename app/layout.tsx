@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Fraunces, Source_Sans_3 } from 'next/font/google'
 import { websiteJsonLd, organizationJsonLd } from '@/lib/structured-data'
-import { PostHogProvider } from './_components/PostHogProvider'
 import './globals.css'
 
 const fraunces = Fraunces({
@@ -67,7 +66,6 @@ export default function RootLayout({
         />
       </head>
       <body className="font-[family-name:var(--font-sans)]">
-        <PostHogProvider>
         <main>{children}</main>
         <footer className="border-t border-cream-dark bg-cream-dark/30 py-10">
           <div className="mx-auto max-w-5xl px-6">
@@ -96,7 +94,6 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
-        </PostHogProvider>
         <Script
           src="https://sdk.feedback.one/v0/core.min.js"
           data-project-id="019cf89f-b125-7de2-b8d0-685269e9bfff"
