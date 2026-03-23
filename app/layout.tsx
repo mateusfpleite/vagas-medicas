@@ -97,7 +97,7 @@ export default function RootLayout({
         <Script
           src="https://sdk.feedback.one/v0/core.min.js"
           data-project-id="019cf89f-b125-7de2-b8d0-685269e9bfff"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
       </body>
     </html>
