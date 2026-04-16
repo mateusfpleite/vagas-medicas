@@ -55,7 +55,13 @@ export default async function SpecialtyStatePage({ params, searchParams }: Props
   if (!specialty || !ufData) notFound()
 
   const page = sp.page ? Number(sp.page) : undefined
-  const { vagas, count } = await fetchVagas({ specialty, state: ufData.sigla, page })
+  const { vagas, count } = await fetchVagas({
+    specialty,
+    state: ufData.sigla,
+    city: sp.city ? sp.city.split(',') : undefined,
+    q: sp.q,
+    page,
+  })
   const { specialties, cities, states } = await fetchFilterOptions({ state: ufData.sigla })
 
   if (count === 0) notFound()

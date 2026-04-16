@@ -48,8 +48,16 @@ export default async function SpecialtyPage({ params, searchParams }: Props) {
   if (!specialty) notFound()
 
   const page = sp.page ? Number(sp.page) : undefined
-  const { vagas, count } = await fetchVagas({ specialty, page })
-  const { specialties, cities, states } = await fetchFilterOptions()
+  const { vagas, count } = await fetchVagas({
+    specialty,
+    city: sp.city ? sp.city.split(',') : undefined,
+    state: sp.state,
+    q: sp.q,
+    page,
+  })
+  const { specialties, cities, states } = await fetchFilterOptions(
+    sp.state ? { state: sp.state } : undefined,
+  )
 
   const crumbs = [
     { label: 'Início', href: '/' },

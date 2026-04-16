@@ -59,7 +59,13 @@ export default async function CityPage({ params, searchParams }: Props) {
   if (!city) notFound()
 
   const page = sp.page ? Number(sp.page) : undefined
-  const { vagas, count } = await fetchVagas({ state: ufData.sigla, city: [city], page })
+  const { vagas, count } = await fetchVagas({
+    state: ufData.sigla,
+    city: [city],
+    specialty: sp.specialty,
+    q: sp.q,
+    page,
+  })
   const { specialties, cities, states } = await fetchFilterOptions({ state: ufData.sigla })
 
   const crumbs = [

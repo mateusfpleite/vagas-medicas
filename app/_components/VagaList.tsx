@@ -42,7 +42,10 @@ export function VagaList({
 
   const updateURL = useCallback(
     (params: Record<string, string | null>) => {
-      const sp = new URLSearchParams(searchParams.toString())
+      // Read from window.location instead of searchParams to avoid stale
+      // closures during pending transitions (e.g. setting specialty then city
+      // in quick succession would lose the first param).
+      const sp = new URLSearchParams(window.location.search)
       Object.entries(params).forEach(([k, v]) => {
         if (v) sp.set(k, v)
         else sp.delete(k)
@@ -52,7 +55,7 @@ export function VagaList({
         router.push(`?${sp.toString()}`, { scroll: false })
       })
     },
-    [router, searchParams],
+    [router, startTransition],
   )
 
   return (

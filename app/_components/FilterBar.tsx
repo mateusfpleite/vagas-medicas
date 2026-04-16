@@ -65,7 +65,7 @@ export function FilterBar({
     <div
       ref={ref}
       data-stuck={stuck}
-      className="filter-bar-sticky sticky top-0 z-10 -mx-6 px-6 py-4"
+      className="filter-bar-sticky z-10 -mx-6 px-6 py-4 sm:sticky sm:top-0"
     >
       <div className="rounded-xl border border-cream-dark/80 bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
