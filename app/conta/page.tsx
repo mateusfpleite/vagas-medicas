@@ -18,7 +18,7 @@ export default async function ContaPage() {
     .from('profiles')
     .select('full_name, crm, crm_uf, phone')
     .eq('id', user.id)
-    .single()
+    .maybeSingle()
 
   return (
     <div className="mx-auto max-w-md px-6 py-12">

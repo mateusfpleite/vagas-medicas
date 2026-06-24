@@ -6,7 +6,10 @@ import { safeNextPath } from '@/lib/auth/validation'
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')
-  const type = searchParams.get('type') as EmailOtpType | null
+  const rawType = searchParams.get('type')
+  // Only the OTP types this app actually issues (signup confirmation + recovery).
+  const type: EmailOtpType | null =
+    rawType === 'email' || rawType === 'recovery' ? rawType : null
   const next = safeNextPath(searchParams.get('next')) || '/conta'
 
   if (token_hash && type) {

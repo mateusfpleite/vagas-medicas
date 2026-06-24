@@ -19,7 +19,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
       </div>
       <AuthField label="Telefone / WhatsApp" name="phone" type="tel" defaultValue={profile.phone ?? ''} autoComplete="tel" />
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
-      {state.message && <p className="text-sm text-green-700">{state.message}</p>}
+      {state.message && <p className="text-sm text-fresh">{state.message}</p>}
       <SubmitButton>Salvar</SubmitButton>
     </form>
   )

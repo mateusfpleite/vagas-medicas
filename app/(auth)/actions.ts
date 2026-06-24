@@ -19,7 +19,7 @@ async function siteUrl(): Promise<string> {
   // users — host-header injection would otherwise point confirm/reset links at
   // an attacker-controlled origin. The header path is a local-dev fallback only.
   const base = process.env.NEXT_PUBLIC_BASE_URL
-  if (base) return base
+  if (base) return base.replace(/\/+$/, '') // tolerate a trailing slash in the env value
   const h = await headers()
   const host = h.get('host')
   if (host) return `http://${host}`
@@ -99,8 +99,10 @@ export async function updatePassword(
 
   const supabase = await createClient()
   // The action is the real trust boundary — guard here, not only on the page
-  // (a client could POST straight to this action). A recovery session must
-  // already exist (set by /auth/confirm via the reset link).
+  // (a client could POST straight to this action). Requires an authenticated
+  // session — normally the recovery session set by /auth/confirm via the reset
+  // link, though any current session works (Supabase's updateUser doesn't
+  // require the old password unless "Secure password change" is enabled).
   const {
     data: { user },
   } = await supabase.auth.getUser()

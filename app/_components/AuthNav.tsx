@@ -28,7 +28,7 @@ export function AuthNav() {
   }
 
   return (
-    <div className="flex items-center gap-3 text-xs">
+    <div className="flex items-center justify-end gap-3 px-6 py-3 text-xs">
       {email ? (
         <>
           <Link href="/conta" className="text-ink-muted hover:text-primary hover:underline">Minha conta</Link>

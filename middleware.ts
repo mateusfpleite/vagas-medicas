@@ -6,7 +6,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|webmanifest|woff|woff2)$).*)',
-  ],
+  // Only the protected area needs session handling. The public site (homepage,
+  // /especialidade/*, /estado/*, /sobre) is static/client-auth, so running
+  // getUser() there would add a Supabase round-trip per request for nothing.
+  matcher: ['/conta/:path*'],
 }

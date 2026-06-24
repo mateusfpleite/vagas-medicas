@@ -67,9 +67,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-[family-name:var(--font-sans)]">
-        <div className="flex justify-end px-6 py-3">
-          <AuthNav />
-        </div>
+        <AuthNav />
         <main>{children}</main>
         <footer className="border-t border-cream-dark bg-cream-dark/30 py-10">
           <div className="mx-auto max-w-5xl px-6">

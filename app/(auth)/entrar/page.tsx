@@ -8,12 +8,14 @@ export const metadata: Metadata = { title: 'Entrar', robots: { index: false } }
 export default async function EntrarPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string }>
+  searchParams: Promise<{ next?: string; error?: string }>
 }) {
-  const { next } = await searchParams
+  const { next, error } = await searchParams
+  const initialError =
+    error === 'auth' ? 'O link expirou ou é inválido. Entre novamente.' : undefined
   return (
     <AuthShell title="Entrar" subtitle="Acesse sua conta de médico.">
-      <SignInForm next={safeNextPath(next)} />
+      <SignInForm next={safeNextPath(next)} initialError={initialError} />
     </AuthShell>
   )
 }
