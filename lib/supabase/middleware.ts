@@ -28,7 +28,9 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!user && request.nextUrl.pathname.startsWith('/conta')) {
+  const { pathname } = request.nextUrl
+  const isProtected = pathname === '/conta' || pathname.startsWith('/conta/')
+  if (!user && isProtected) {
     const url = request.nextUrl.clone()
     url.pathname = '/entrar'
     url.searchParams.set('next', request.nextUrl.pathname)

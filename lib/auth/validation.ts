@@ -10,17 +10,40 @@ export function validatePassword(pw: string): string | null {
   return null
 }
 
-/** Only allow internal absolute paths; block open redirects. */
+/** True if the string contains any ASCII control char (incl. CR/LF/tab) or DEL. */
+function hasControlChar(s: string): boolean {
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i)
+    if (c < 0x20 || c === 0x7f) return true
+  }
+  return false
+}
+
+/**
+ * Only allow internal absolute paths; block open redirects.
+ *
+ * Rejects protocol-relative (`//host`), backslash tricks (`/\host`, `/\/host` —
+ * the WHATWG URL parser treats `\` as `/` for http(s), so these resolve
+ * cross-origin), and control/whitespace chars. Anything that survives is
+ * resolved against a fixed dummy origin and only returned if the origin is
+ * unchanged — so a malicious target can never escape same-origin.
+ */
 export function safeNextPath(next: string | null | undefined): string {
-  if (!next || !next.startsWith('/') || next.startsWith('//')) return ''
-  return next
+  if (!next || !next.startsWith('/') || next.startsWith('//') || next.includes('\\')) return ''
+  if (hasControlChar(next)) return ''
+  try {
+    const u = new URL(next, 'http://localhost')
+    return u.origin === 'http://localhost' ? u.pathname + u.search + u.hash : ''
+  } catch {
+    return ''
+  }
 }
 
 type AuthErrorLike = { message?: string; code?: string; status?: number }
 
-export function authErrorMessage(error: AuthErrorLike): string {
-  const code = error.code ?? ''
-  const msg = (error.message ?? '').toLowerCase()
+export function authErrorMessage(error: AuthErrorLike | null | undefined): string {
+  const code = error?.code ?? ''
+  const msg = (error?.message ?? '').toLowerCase()
   if (code === 'invalid_credentials' || msg.includes('invalid login'))
     return 'E-mail ou senha incorretos.'
   if (code === 'user_already_exists' || msg.includes('already registered'))
