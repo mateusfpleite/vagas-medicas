@@ -10,9 +10,13 @@ export async function GET(request: NextRequest) {
   const next = safeNextPath(searchParams.get('next')) || '/conta'
 
   if (token_hash && type) {
-    const supabase = await createClient()
-    const { error } = await supabase.auth.verifyOtp({ type, token_hash })
-    if (!error) return NextResponse.redirect(new URL(next, request.url))
+    try {
+      const supabase = await createClient()
+      const { error } = await supabase.auth.verifyOtp({ type, token_hash })
+      if (!error) return NextResponse.redirect(new URL(next, request.url))
+    } catch {
+      // fall through to the error redirect
+    }
   }
   return NextResponse.redirect(new URL('/entrar?error=auth', request.url))
 }

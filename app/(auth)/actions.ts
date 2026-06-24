@@ -14,13 +14,16 @@ import {
 export type ActionState = { error?: string; message?: string }
 
 async function siteUrl(): Promise<string> {
+  // Prefer the build-time-pinned canonical origin. Never trust client-supplied
+  // headers (Origin / Host / X-Forwarded-Host) for links that get emailed to
+  // users — host-header injection would otherwise point confirm/reset links at
+  // an attacker-controlled origin. The header path is a local-dev fallback only.
+  const base = process.env.NEXT_PUBLIC_BASE_URL
+  if (base) return base
   const h = await headers()
-  const origin = h.get('origin')
-  if (origin) return origin
-  const host = h.get('x-forwarded-host') ?? h.get('host')
-  const proto = h.get('x-forwarded-proto') ?? 'https'
-  if (host) return `${proto}://${host}`
-  return process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
+  const host = h.get('host')
+  if (host) return `http://${host}`
+  return 'http://localhost:3000'
 }
 
 export async function signIn(_prev: ActionState, formData: FormData): Promise<ActionState> {
