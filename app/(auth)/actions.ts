@@ -98,6 +98,14 @@ export async function updatePassword(
   if (pwErr) return { error: pwErr }
 
   const supabase = await createClient()
+  // The action is the real trust boundary — guard here, not only on the page
+  // (a client could POST straight to this action). A recovery session must
+  // already exist (set by /auth/confirm via the reset link).
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return { error: 'Sessão expirada. Abra o link de redefinição novamente.' }
+
   const { error } = await supabase.auth.updateUser({ password })
   if (error) return { error: authErrorMessage(error) }
 
