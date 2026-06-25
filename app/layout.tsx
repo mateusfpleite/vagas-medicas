@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Fraunces, Source_Sans_3 } from 'next/font/google'
 import { websiteJsonLd, organizationJsonLd } from '@/lib/structured-data'
+import { AuthNav } from './_components/AuthNav'
 import './globals.css'
 
 const fraunces = Fraunces({
@@ -66,6 +67,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-[family-name:var(--font-sans)]">
+        <AuthNav />
         <main>{children}</main>
         <footer className="border-t border-cream-dark bg-cream-dark/30 py-10">
           <div className="mx-auto max-w-5xl px-6">
