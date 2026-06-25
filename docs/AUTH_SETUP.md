@@ -4,7 +4,7 @@ Doctor authentication for EmpregaMed, built on **Supabase Auth** (email + passwo
 with an auto-provisioned `profiles` table and a protected `/conta` page.
 
 The code is **deployable as-is**: every Supabase entry point is guarded by
-`isSupabaseConfigured()`, so with no anon key the public site is completely
+`isSupabaseConfigured()`, so with no publishable key the public site is completely
 unchanged and the auth UI simply doesn't appear. The steps below light it up.
 
 ---
@@ -14,11 +14,15 @@ unchanged and the auth UI simply doesn't appear. The steps below light it up.
 | Variable | Value | Where |
 |----------|-------|-------|
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://xbpiwfyctoslazrnzxsd.supabase.co` | `.env.local` + Vercel |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | the project **anon public** key | `.env.local` + Vercel |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | the project **publishable** key (`sb_publishable_…`) | `.env.local` + Vercel |
 | `NEXT_PUBLIC_BASE_URL` | `https://empregamed.com.br` | Vercel (prod/preview) |
 
-- Get the anon key from **Supabase dashboard → Project Settings → API → Project API
-  keys → `anon` `public`**. It is a public JWT (safe to ship to the browser).
+- Get the publishable key from **Supabase dashboard → Project Settings → API Keys →
+  Publishable key** (format `sb_publishable_…`). It is the current successor to the
+  legacy `anon` JWT key (same low privileges, RLS behaves identically) and is safe to
+  ship to the browser. The legacy `anon` key still works but is being deprecated —
+  prefer the publishable key. If your dashboard only shows the legacy keys, click
+  **Create new API keys** first.
 - `NEXT_PUBLIC_BASE_URL` is the canonical origin used to build the confirm/reset
   links that get emailed to users. It **must** be set in production — the auth
   code deliberately does **not** trust request `Host`/`Origin` headers for those
@@ -78,7 +82,7 @@ psql "$DBURL" -v ON_ERROR_STOP=1 -f supabase/migrations/0001_profiles.sql
 
 ## 4. Manual E2E checklist
 
-After the anon key is set and the app is deployed/running, verify:
+After the publishable key is set and the app is deployed/running, verify:
 
 1. **Sign up** at `/cadastrar` → receive confirmation email → click link → land on `/conta`.
 2. **Log in** at `/entrar` → redirected to `/conta`.
