@@ -67,15 +67,20 @@ confirmation on → "check your email" message; off → immediate login.
 
 ## 3. Database
 
-The migration `supabase/migrations/0001_profiles.sql` is **already applied** to the
-shared Supabase Postgres. It creates `public.profiles` (1:1 with `auth.users`),
-enables RLS (a user can only read/write their own row), and installs the
-`on_auth_user_created` trigger that auto-creates a profile row on signup.
+Two migrations are **already applied** to the shared Supabase Postgres:
+- `supabase/migrations/0001_profiles.sql` — creates `public.profiles` (1:1 with
+  `auth.users`), enables RLS (a user can only read/write their own row), and installs
+  the `on_auth_user_created` trigger that auto-creates a profile row on signup.
+- `supabase/migrations/0002_lock_vagas.sql` — security hardening from the RLS audit:
+  removes public `anon` access to the base `vagas` table and `vagas_public` view
+  (they exposed `raw_html` + internal columns). The frontend reads vagas via the
+  privileged pooler connection, so this is transparent to the site.
 
 To re-apply elsewhere (idempotent):
 ```bash
 DBURL=$(grep '^DATABASE_URL=' ../.env | cut -d= -f2-)   # from repo root .env
 psql "$DBURL" -v ON_ERROR_STOP=1 -f supabase/migrations/0001_profiles.sql
+psql "$DBURL" -v ON_ERROR_STOP=1 -f supabase/migrations/0002_lock_vagas.sql
 ```
 
 ---
